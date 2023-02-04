@@ -26,16 +26,22 @@ npm start
 
 ### Installation
 
-You can install the library  as regular library:
+With your favorite package manager:
 
-```html
-	<script src="/dist/slashd-run.min.js"></script>
+```shell
+npm install @slashd/run
 ```
 
-or using ES6:
+Then, use it in the browser:
+
+```html
+<script src="node_modules/dist/slashd-run.min.js"></script>
+```
+
+or with ES6 in a module or within a bundler:
 
 ```js
-import SlashdRun from '/src/index.js'
+import SlashdRun from '@slashd/run'
 ```
 
 
@@ -44,7 +50,7 @@ import SlashdRun from '/src/index.js'
 
 ### How to use
 
-**Slashd Run** return a promise, so you can use it with await:
+**Slashd Run** return a promise, so you can use it with `await`:
 
 ```js
 const myCode = `return Math.random() * param`
