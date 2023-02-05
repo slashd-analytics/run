@@ -1,6 +1,6 @@
 # Slashd Run
 
-**Slashd Run** is a tiny library that runs user provided code code into a **Web Worker**. 
+**Slashd Run** is a tiny library that runs user-provided code into a **Web Worker**. 
 Its main purpose is to allow data transformation through snippet of code, therefore some global capabilities are disabled.
 
 A Web Worker cannot access the DOM therefore it cannot manipulate the webpage that use it.

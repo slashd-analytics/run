@@ -1,7 +1,7 @@
 {
   "name": "@slashd/run",
   "version": "0.0.4",
-  "description": "Run untrusted code in a Web Worker",
+  "description": "Run user-provided code in a Web Worker",
   "homepage": "https://slashd.cc",
   "unpkg": "dist/slashd-run.min.js",
   "module": "src/index.js",
