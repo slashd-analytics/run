@@ -1,9 +1,9 @@
 # Slashd Run
 
 **Slashd Run** is a tiny library to run untrusted code into a Web Worker. 
-The main purpose is to allows data transformation through code, therefore some global capabilities are disabled.
+Its main purpose is to allow data transformation through snippet of code, therefore some global capabilities are disabled.
 
-A Web Worker doesn't have access to the DOM therefore it cannot manipulate the webpage.
+A Web Worker cannot access the DOM therefore it cannot manipulate the webpage that use it.
 
 Ideally, the host can execute some code, providing some data and get back the result.
 
@@ -12,9 +12,13 @@ There are some helper libraries included to help formatting and transformation, 
 - lodash
 - numbro
 
+In future version this specific capability will be configurable.
 
 
-### Run locally:
+
+
+
+### Develop locally:
 
 Start the watcher
 
