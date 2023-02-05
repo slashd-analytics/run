@@ -3,6 +3,11 @@ let evalWorker = null
 
 const setup = (paths) => {
 
+    if(evalWorker) {
+        console.log('worker already created')
+        return
+    }
+
     let externalScriptsDirective = ''
 
     if(paths){

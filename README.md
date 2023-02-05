@@ -9,24 +9,6 @@ Ideally, the application allows to execute some code provided by the user, along
 
 
 
-### Develop locally:
-
-Install dependencies:
-
-```shell
-npm i
-```
-
-
-
-Start the watcher
-
-```shell
-npm start 
-```
-
-
-
 ### Install
 
 Use your favorite package manager:
@@ -91,3 +73,23 @@ const res = await SlashdRun.exe(myCode, {arr1:[2, 1], arr2:[2, 3]})
 
 // => [1]
 ```
+
+
+
+
+### Contribute:
+
+Install dependencies:
+
+```shell
+npm i
+```
+
+
+Start the watcher
+
+```shell
+npm start 
+```
+
+
