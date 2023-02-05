@@ -1,24 +1,23 @@
 # Slashd Run
 
-**Slashd Run** is a tiny library to run untrusted code into a Web Worker. 
+**Slashd Run** is a tiny library that runs user provided code code into a **Web Worker**. 
 Its main purpose is to allow data transformation through snippet of code, therefore some global capabilities are disabled.
 
 A Web Worker cannot access the DOM therefore it cannot manipulate the webpage that use it.
 
-Ideally, the host can execute some code, providing some data and get back the result.
-
-There are some helper libraries included to help formatting and transformation, such as:
-- dayjs
-- lodash
-- numbro
-
-In future version this specific capability will be configurable.
-
-
+Ideally, the application allows to execute some code provided by the user, alongside some data to get back a result.
 
 
 
 ### Develop locally:
+
+Install dependencies:
+
+```shell
+npm i
+```
+
+
 
 Start the watcher
 
@@ -28,15 +27,15 @@ npm start
 
 
 
-### Installation
+### Install
 
-With your favorite package manager:
+Use your favorite package manager:
 
 ```shell
 npm install @slashd/run
 ```
 
-Then, use it in the browser:
+Then, include it in the browser:
 
 ```html
 <script src="node_modules/dist/slashd-run.min.js"></script>
@@ -54,13 +53,31 @@ import SlashdRun from '@slashd/run'
 
 ### How to use
 
-**Slashd Run** return a promise, so you can use it with `await`:
+The library requires a one-off init somewhere in your code, i.e.:
+
+```js
+import SlashdRun from '@slashd/run'
+SlashdRun.setup()
+```
+
+
+
+The `exe` method returns a promise, so you can use it with `await`:
 
 ```js
 const myCode = `return Math.random() * param`
 
-const res = await SlashdRun(myCode, {param:20})
+const res = await SlashdRun.exe(myCode, {param:20})
 
-// i.e. 12.345657676
+// res is i.e. 12.345657676
 ```
 
+
+
+### Configuration
+
+You can specify to load external libraries within the worker by adding them in the setup as an array of external paths:
+
+```js
+SlashdRun.setup(['https://unpkg.com/lodash', 'https://www.example.com/mylibrary.js'])
+```
