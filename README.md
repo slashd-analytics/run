@@ -87,7 +87,7 @@ With the above setup, it's possible to use `lodash` in the provided code:
 ```js
 const myCode = `_.difference(arr1, arr2);`
 
-const res = await SlashdRun(myCode, {arr1:[2, 1], arr2:[2, 3]})
+const res = await SlashdRun.exe(myCode, {arr1:[2, 1], arr2:[2, 3]})
 
 // => [1]
 ```
