@@ -81,3 +81,13 @@ You can specify to load external libraries within the worker by adding them in t
 ```js
 SlashdRun.setup(['https://unpkg.com/lodash', 'https://www.example.com/mylibrary.js'])
 ```
+
+With the above setup, it's possible to use `lodash` in the provided code:
+
+```js
+const myCode = `_.difference(arr1, arr2);`
+
+const res = await SlashdRun(myCode, {arr1:[2, 1], arr2:[2, 3]})
+
+// => [1]
+```
