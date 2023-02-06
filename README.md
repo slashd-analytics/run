@@ -1,11 +1,17 @@
-# Slashd Run
+# Run
 
-**Slashd Run** is a tiny library that runs user-provided code into a **Web Worker**. 
+**Run** is a tiny library that runs user-provided code into a **Web Worker**. 
 Its main purpose is to allow data transformation through snippet of code, therefore some global capabilities are disabled.
 
-A Web Worker cannot access the DOM therefore it cannot manipulate the webpage that use it.
+The library takes a chunk of javascript code (as string) and a data payload and return the result from its execution.
 
-Ideally, the application allows to execute some code provided by the user, alongside some data to get back a result.
+It does try to run "untrusted" code as safer as possible, since:
+
+- The Web Worker can't access the DOM
+- The Web Worker can't access the domain context of the host application
+- The Web Worker shouldn't be able to make network operations (still in investigation)
+
+The main use-case is within low-code application where users can run snippets of code (not necessarily created by the same user) for a variety of tasks.
 
 
 
@@ -77,7 +83,7 @@ const res = await SlashdRun.exe(myCode, {arr1:[2, 1], arr2:[2, 3]})
 
 
 
-### Contribute:
+### Contribute
 
 Install dependencies:
 
@@ -91,5 +97,4 @@ Start the watcher
 ```shell
 npm start 
 ```
-
 
