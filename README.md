@@ -64,10 +64,10 @@ const res = await SlashdRun.exe(myCode, {param:20})
 
 ### Configuration
 
-You can specify to load external libraries within the worker by adding them in the setup as an array of external paths:
+You can specify to load external libraries within the worker by adding the prop `deps` in the setup as an array of external paths:
 
 ```js
-SlashdRun.setup(['https://unpkg.com/lodash', 'https://www.example.com/mylibrary.js'])
+SlashdRun.setup({deps:['https://unpkg.com/lodash', 'https://www.example.com/mylibrary.js']})
 ```
 
 With the above setup, it's possible to use `lodash` in the provided code:
@@ -80,8 +80,14 @@ const res = await SlashdRun.exe(myCode, {arr1:[2, 1], arr2:[2, 3]})
 // => [1]
 ```
 
+By default the Web Worker tries to limit some operation, such as the network capabilities.
+If you want to disable this behavior and keep all the standard Web Worker capabilities, add the prop `restrict` set to `false`:
 
+```js
+SlashdRun.setup({restrict:false})
+```
 
+With this option the user-provided code can make network operations, such `fetch()`.
 
 ### Contribute
 

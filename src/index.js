@@ -1,7 +1,9 @@
 const queue = {}
 let evalWorker = null
 
-const setup = (paths) => {
+const setup = (props) => {
+
+    const {deps, restrict} = props || {}
 
     if(evalWorker) {
         console.log('worker already created')
@@ -10,17 +12,19 @@ const setup = (paths) => {
 
     let externalScriptsDirective = ''
 
-    if(paths){
-        const ext = JSON.stringify(paths).replace(/[\[\]]/mig, '')
+    if(deps){
+        const ext = JSON.stringify(deps).replace(/[\[\]]/mig, '')
         externalScriptsDirective = `self.importScripts(${ext})`
     }
+
+    let restrictSandboxDirective = restrict ? `dangObjects.forEach(d => self[d] = {})` : ''
 
     const workerRunnerStrFunc = `function workerRunner(){
 
         ${externalScriptsDirective}
 
         const dangObjects = ['Worker', 'fetch', 'location', 'IndexedDB', 'WebTransport', 'WebSocketStream', 'BroadcastChannel', 'XMLHttpRequest', 'WebSocket', 'EventSource', 'WorkerNavigator', 'navigator']
-        dangObjects.forEach(d => self[d] = {})
+        ${restrictSandboxDirective}
         
         self.onmessage = function(event) {
             const {code, context, uid} = event.data
@@ -54,7 +58,7 @@ const setup = (paths) => {
 
 
 const exe = (code, context) => {
-    const uid = new Date().getTime() + Math.random()
+    const uid = new Date().getTime() + '_' + Math.random()
     evalWorker.postMessage({code,context,uid})
     return new Promise((resolve, reject) => {
         queue[uid] = resolve
