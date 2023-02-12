@@ -9,6 +9,7 @@ It does try to run "untrusted" code as safer as possible, since:
 
 - The Web Worker can't access the DOM
 - The Web Worker can't access the domain context of the host application
+- The Web Worker runs in a separated thread, it doesn't block the UI
 - The Web Worker shouldn't be able to make network operations (still in investigation)
 
 The main use-case is within low-code application where users can run snippets of code (not necessarily created by the same user) for a variety of tasks.
