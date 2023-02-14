@@ -62,6 +62,20 @@ const res = await SlashdRun.exe(myCode, {param:20})
 ```
 
 
+You can catch code error with:
+
+```js
+const myCode = `return MathRandom * param`
+
+try{
+    const res = await SlashdRun.exe(myCode, {param:20})
+}catch(e){
+    console.log(e)
+}
+
+// ReferenceError: MathRandom is not defined
+```
+
 
 ### Configuration
 
