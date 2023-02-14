@@ -5,28 +5,41 @@ Its main purpose is to allow data transformation through snippet of code, theref
 
 The library takes a chunk of javascript code (as string) and a data payload and return the result from its execution.
 
-It does try to run "untrusted" code as safer as possible, since:
+It does try to run *"untrusted"* code as safer as possible, since:
 
 - The Web Worker can't access the DOM
 - The Web Worker can't access the domain context of the host application
 - The Web Worker runs in a separated thread, it doesn't block the UI
 - The Web Worker shouldn't be able to make network operations (still in investigation)
 
-The main use-case is within low-code application where users can run snippets of code (not necessarily created by the same user) for a variety of tasks.
+The main use-case is within low-code applications where users can run snippets of code (not necessarily created by the same user) for a variety of tasks.
+
+**Run** will be used in our upcoming Open Source Chart SDK project **Slashd**.
 
 
 
 ### Install
 
-Straight the browser with SkyPack:
+With **UnPkg CDN**:
+
+```html
+<script src="https://unpkg.com/@slashd/run"></script>
+```
+
+
+
+With **SkyPack CDN**:
 
 ```html
 <script type="module">
-	import SlashdRun from 'https://cdn.skypack.dev/@slashd/run'
+import SlashdRun from 'https://cdn.skypack.dev/@slashd/run'
+// your code
 </script>
 ```
 
-With your favorite package manager:
+
+
+With a package manager:
 
 ```shell
 npm install @slashd/run
@@ -38,7 +51,7 @@ Then, include it in the browser:
 <script src="node_modules/@slashd/run/dist/slashd-run.min.js"></script>
 ```
 
-or with ES6 in a module or within a bundler:
+or with ES6 in a module with a bundler:
 
 ```js
 import SlashdRun from '@slashd/run'
