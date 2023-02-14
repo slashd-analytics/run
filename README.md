@@ -18,7 +18,15 @@ The main use-case is within low-code application where users can run snippets of
 
 ### Install
 
-Use your favorite package manager:
+Straight the browser with SkyPack:
+
+```html
+<script type="module">
+	import SlashdRun from 'https://cdn.skypack.dev/@slashd/run'
+</script>
+```
+
+With your favorite package manager:
 
 ```shell
 npm install @slashd/run
@@ -27,7 +35,7 @@ npm install @slashd/run
 Then, include it in the browser:
 
 ```html
-<script src="node_modules/dist/slashd-run.min.js"></script>
+<script src="node_modules/@slashd/run/dist/slashd-run.min.js"></script>
 ```
 
 or with ES6 in a module or within a bundler:
