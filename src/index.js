@@ -1,4 +1,5 @@
 const queue = {}
+const rejec = {}
 let evalWorker = null
 
 const setup = (props) => {
@@ -32,8 +33,12 @@ const setup = (props) => {
             const keysStr = keys.toString()
             const func = new Function(keysStr, code)
             const arrkeys = keys.map(k => context[k])
-            const res = func(...arrkeys)
-            self.postMessage({uid, res})
+            try{
+                const res = func(...arrkeys)
+                self.postMessage({uid, res})
+            }catch(res){
+                self.postMessage({uid, res, error:true})
+            }
         }
 
     }`
@@ -48,8 +53,16 @@ const setup = (props) => {
     evalWorker = new Worker(workerBlobUrl)
 
     evalWorker.addEventListener('message', function(event){
-        const {uid, res} = event.data
-        queue[uid](res)
+        const {uid, res, error} = event.data
+        if(error){
+            rejec[uid](res)
+        }else{
+            queue[uid](res)
+        }
+
+        rejec[uid] = null
+        delete rejec[uid]
+
         queue[uid] = null
         delete queue[uid]
     }, false)
@@ -62,6 +75,7 @@ const exe = (code, context) => {
     evalWorker.postMessage({code,context,uid})
     return new Promise((resolve, reject) => {
         queue[uid] = resolve
+        rejec[uid] = reject
     })
 }
 
