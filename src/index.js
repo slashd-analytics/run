@@ -31,9 +31,9 @@ const setup = (props) => {
             const {code, context, uid} = event.data
             const keys = Object.keys(context)
             const keysStr = keys.toString()
-            const func = new Function(keysStr, code)
-            const arrkeys = keys.map(k => context[k])
             try{
+                const func = new Function(keysStr, code)
+                const arrkeys = keys.map(k => context[k])
                 const res = func(...arrkeys)
                 self.postMessage({uid, res})
             }catch(res){
