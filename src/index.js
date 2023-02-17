@@ -70,7 +70,7 @@ const setup = (props) => {
 }
 
 
-const exe = (code, context) => {
+const exe = (code, context={}) => {
     const uid = new Date().getTime() + '_' + Math.random()
     evalWorker.postMessage({code,context,uid})
     return new Promise((resolve, reject) => {
