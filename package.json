@@ -1,6 +1,6 @@
 {
   "name": "@slashd/run",
-  "version": "0.0.14",
+  "version": "0.0.15",
   "description": "Run user-provided code in a Web Worker",
   "homepage": "https://slashd.cc",
   "unpkg": "dist/slashd-run.min.js",
@@ -41,4 +41,3 @@
     "standard": "^17.0.0"
   }
 }
-
