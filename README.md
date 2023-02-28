@@ -63,11 +63,12 @@ import SlashdRun from '@slashd/run'
 
 ### How to use
 
-The library requires a one-off init somewhere in your code, i.e.:
+You can create one or more tasks (independent workers):
 
 ```js
 import SlashdRun from '@slashd/run'
-SlashdRun.setup()
+
+const task = new SlashdRun()
 ```
 
 
@@ -77,7 +78,7 @@ The `exe` method returns a promise, so you can use it with `await`:
 ```js
 const myCode = `return Math.random() * param`
 
-const res = await SlashdRun.exe(myCode, {param:20})
+const res = await task.exe(myCode, {param:20})
 
 // res is i.e. 12.345657676
 ```
@@ -89,7 +90,7 @@ You can catch code error with:
 const myCode = `return MathRandom * param`
 
 try{
-    const res = await SlashdRun.exe(myCode, {param:20})
+    const res = await task.exe(myCode, {param:20})
 }catch(e){
     console.log(e)
 }
@@ -103,7 +104,7 @@ try{
 You can specify to load external libraries within the worker by adding the prop `deps` in the setup as an array of external paths:
 
 ```js
-SlashdRun.setup({deps:['https://unpkg.com/lodash', 'https://www.example.com/mylibrary.js']})
+const task = new SlashdRun({deps:['https://unpkg.com/lodash', 'https://www.example.com/mylibrary.js']})
 ```
 
 With the above setup, it's possible to use `lodash` in the provided code:
@@ -111,7 +112,7 @@ With the above setup, it's possible to use `lodash` in the provided code:
 ```js
 const myCode = `_.difference(arr1, arr2);`
 
-const res = await SlashdRun.exe(myCode, {arr1:[2, 1], arr2:[2, 3]})
+const res = await task.exe(myCode, {arr1:[2, 1], arr2:[2, 3]})
 
 // => [1]
 ```
@@ -120,10 +121,17 @@ By default the Web Worker tries to limit some operation, such as the network cap
 If you want to disable this behavior and keep all the standard Web Worker capabilities, add the prop `restrict` set to `false`:
 
 ```js
-SlashdRun.setup({restrict:false})
+const task = new SlashdRun({restrict:false})
 ```
 
 With this option the user-provided code can make network operations, such `fetch()`.
+
+
+To terminate the worker you can use:
+
+```js
+task.destroy()
+```
 
 ### Contribute
 

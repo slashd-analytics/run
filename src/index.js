@@ -1,15 +1,11 @@
-const queue = {}
-const rejec = {}
-let evalWorker = null
+let count = 0
 
-const setup = (props) => {
+export default function(props){
 
-    const {deps, restrict} = props || {}
+    const queue = {}
+    const rejec = {}
 
-    if(evalWorker) {
-        console.log('worker already created')
-        return
-    }
+    const {deps, restrict=true} = props || {}
 
     let externalScriptsDirective = ''
 
@@ -28,16 +24,16 @@ const setup = (props) => {
         ${restrictSandboxDirective}
         
         self.onmessage = function(event) {
-            const {code, context, uid} = event.data
+            const {code, context, uid, wid} = event.data
             const keys = Object.keys(context)
             const keysStr = keys.toString()
             try{
                 const func = new Function(keysStr, code)
                 const arrkeys = keys.map(k => context[k])
                 const res = func(...arrkeys)
-                self.postMessage({uid, res})
+                self.postMessage({uid, res, wid})
             }catch(res){
-                self.postMessage({uid, res, error:true})
+                self.postMessage({uid, res, error:true, wid})
             }
         }
 
@@ -49,11 +45,12 @@ const setup = (props) => {
     )
 
     const workerBlobUrl = URL.createObjectURL(workerBlob)
+    const evalWorker = new Worker(workerBlobUrl)
+    count++
+    const wid = count
 
-    evalWorker = new Worker(workerBlobUrl)
-
-    evalWorker.addEventListener('message', function(event){
-        const {uid, res, error} = event.data
+    const callback = function(event){
+        const {wid, uid, res, error} = event.data
         if(error){
             rejec[uid](res)
         }else{
@@ -65,20 +62,24 @@ const setup = (props) => {
 
         queue[uid] = null
         delete queue[uid]
-    }, false)
+    }
+
+    evalWorker.addEventListener('message', callback, false)
+
+
+    this.exe = (code, context={}) => {
+        const uid = wid + '_' + new Date().getTime() + '_' + Math.random()
+        evalWorker.postMessage({code,context,uid,wid})
+        return new Promise((resolve, reject) => {
+            queue[uid] = resolve
+            rejec[uid] = reject
+        })
+    }
+
+    this.destroy = () => {
+        evalWorker.removeEventListener('message', callback, false)
+        evalWorker.terminate()
+    }
 
 }
 
-
-const exe = (code, context={}) => {
-    const uid = new Date().getTime() + '_' + Math.random()
-    evalWorker.postMessage({code,context,uid})
-    return new Promise((resolve, reject) => {
-        queue[uid] = resolve
-        rejec[uid] = reject
-    })
-}
-
-
-
-export default {setup, exe}
