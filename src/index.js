@@ -1,11 +1,40 @@
 let count = 0
+let globalRestrict = true
+let globalDeps = []
+let globalMaxWorkers
+const pool = []
 
-export default function(props){
+export const init = (props) => {
+    const {deps, restrict=true, maxWorkers} = props || {}
+    globalRestrict = restrict
+    globalDeps = deps
+
+    globalMaxWorkers = maxWorkers
+    if(globalMaxWorkers){
+        for(let i=0; i<globalMaxWorkers; ++i){
+            pool.push(new task())
+        }
+    }
+}
+
+export const getFromPool = () => {
+    if(pool.length === 0) return console.error('getFromPool requires maxWorkers option set in init')
+    const i = Math.round(Math.random()*(globalMaxWorkers-1))
+    return pool[i]
+}
+
+export const disposePool = () => {
+    for(let i=0; i<globalMaxWorkers; ++i){
+        pool[i].destroy()
+    }
+}
+
+const task = function(props){
 
     const queue = {}
     const rejec = {}
 
-    const {deps, restrict=true} = props || {}
+    const {deps=globalDeps, restrict=globalRestrict} = props || {}
 
     let externalScriptsDirective = ''
 
@@ -23,14 +52,16 @@ export default function(props){
         const dangObjects = ['Worker', 'fetch', 'location', 'IndexedDB', 'WebTransport', 'WebSocketStream', 'BroadcastChannel', 'XMLHttpRequest', 'WebSocket', 'EventSource', 'WorkerNavigator', 'navigator']
         ${restrictSandboxDirective}
         
-        self.onmessage = function(event) {
+        const AsyncFunction = async function () {}.constructor
+
+        self.onmessage = async function(event) {
             const {code, context, uid, wid} = event.data
             const keys = Object.keys(context)
             const keysStr = keys.toString()
             try{
-                const func = new Function(keysStr, code)
+                const func = new AsyncFunction(keysStr, code)
                 const arrkeys = keys.map(k => context[k])
-                const res = func(...arrkeys)
+                const res = await func(...arrkeys)
                 self.postMessage({uid, res, wid})
             }catch(res){
                 self.postMessage({uid, res, error:true, wid})
@@ -83,3 +114,4 @@ export default function(props){
 
 }
 
+export default task
