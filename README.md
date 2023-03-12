@@ -14,9 +14,9 @@ It does try to run *"untrusted"* code as safer as possible, since:
 
 The main use-case is within low-code applications where users can run snippets of code (not necessarily created by the same user) for a variety of tasks.
 
-**Run** will be used in our upcoming Open Source Chart SDK project [Slashd](https://github.com/slashd-analytics/slashd).
+**Run** will be used in our upcoming Open Source Dashboard SDK project [Slashd](https://github.com/slashd-analytics/slashd).
 
-
+There's a little sandbox app [here](https://slashdrun-app.netlify.app/) to play with.
 
 ### Install
 
