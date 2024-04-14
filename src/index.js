@@ -38,9 +38,18 @@ const task = function(props){
 
     let externalScriptsDirective = ''
 
-    if(deps){
-        const ext = JSON.stringify(deps).replace(/[\[\]]/mig, '')
-        externalScriptsDirective = `self.importScripts(${ext})`
+    if(deps && deps.length > 0){
+        //const ext = JSON.stringify(deps).replace(/[\[\]]/mig, '')
+        deps.forEach(dep => {
+            externalScriptsDirective += `
+try {
+    self.importScripts("${dep}")
+} catch(e) { 
+    console.log(e.message || e.code || e.name) 
+}
+`
+        })
+        
     }
 
     let restrictSandboxDirective = restrict ? `dangObjects.forEach(d => self[d] = {})` : ''
