@@ -29,15 +29,15 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@babel/core": "7.24.8",
-    "@babel/preset-env": "7.24.8",
+    "@babel/core": "^7.24.9",
+    "@babel/preset-env": "^7.24.3",
     "@rollup/plugin-babel": "6.0.4",
     "@rollup/plugin-commonjs": "^26.0.1",
     "@rollup/plugin-node-resolve": "15.2.3",
     "@rollup/plugin-terser": "^0.4.4",
     "browser-sync": "3.0.2",
     "eslint": "8.57.0",
-    "rollup": "4.18.1",
+    "rollup": "4.19.1",
     "standard": "^17.0.0"
   }
 }
