@@ -30,14 +30,14 @@
   "license": "ISC",
   "devDependencies": {
     "@babel/core": "7.25.2",
-    "@babel/preset-env": "7.25.3",
+    "@babel/preset-env": "7.25.4",
     "@rollup/plugin-babel": "6.0.4",
     "@rollup/plugin-commonjs": "^26.0.1",
     "@rollup/plugin-node-resolve": "15.2.3",
     "@rollup/plugin-terser": "^0.4.4",
     "browser-sync": "3.0.2",
     "eslint": "8.57.0",
-    "rollup": "4.20.0",
+    "rollup": "4.21.2",
     "standard": "^17.0.0"
   }
 }
