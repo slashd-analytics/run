@@ -37,7 +37,7 @@
     "@rollup/plugin-terser": "^0.4.4",
     "browser-sync": "3.0.3",
     "eslint": "8.57.0",
-    "rollup": "4.24.0",
+    "rollup": "4.28.1",
     "standard": "17.1.2"
   }
 }
